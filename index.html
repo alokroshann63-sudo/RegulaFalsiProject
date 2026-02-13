@@ -26,6 +26,7 @@
             --warning: #8b6914;
             --shadow: rgba(26, 22, 20, 0.08);
             --shadow-lg: rgba(26, 22, 20, 0.15);
+            --nav-height: 70px;
         }
 
         [data-theme="dark"] {
@@ -46,11 +47,9 @@
             --shadow-lg: rgba(0, 0, 0, 0.5);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Crimson Pro', serif;
@@ -61,7 +60,7 @@
             overflow-x: hidden;
         }
 
-        /* Header */
+        /* ===================== NAVBAR ===================== */
         header {
             position: fixed;
             top: 0;
@@ -69,36 +68,197 @@
             background: var(--bg-primary);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 4px 20px var(--shadow-lg);
         }
 
         nav {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1.2rem 2rem;
+            padding: 0 2rem;
+            height: var(--nav-height);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
         }
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 900;
             color: var(--accent-primary);
             letter-spacing: -0.5px;
+            white-space: nowrap;
+            cursor: pointer;
+            text-decoration: none;
         }
 
+        /* Nav Links */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links li a,
+        .nav-links li button {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.85rem;
+            border-radius: 8px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li button:hover {
+            background: var(--accent-light);
+            color: var(--accent-primary);
+        }
+
+        .nav-links li a.active,
+        .nav-links li button.active {
+            background: var(--accent-light);
+            color: var(--accent-primary);
+        }
+
+        .nav-links .nav-icon {
+            font-size: 0.95rem;
+        }
+
+        /* Calculator FAB in Navbar */
+        .nav-calc-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.2rem;
+            background: var(--accent-primary);
+            color: rgb(94, 92, 92)!important;
+            border-radius: 8px;
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 3px 12px var(--shadow);
+        }
+
+        .nav-calc-btn:hover {
+            background: var(--accent-secondary) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 18px var(--shadow-lg) !important;
+            color: white !important;
+        }
+
+        /* Nav Right Group */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .hamburger:hover { background: var(--accent-light); }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            width: 100%;
+            background: var(--bg-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem;
+            z-index: 999;
+            flex-direction: column;
+            gap: 0.4rem;
+            box-shadow: 0 8px 30px var(--shadow-lg);
+            animation: slideDown 0.3s ease;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a,
+        .mobile-menu button {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu button:hover {
+            background: var(--accent-light);
+            color: var(--accent-primary);
+        }
+
+        .mobile-calc-btn {
+            background: var(--accent-primary) !important;
+            color: white !important;
+            margin-top: 0.4rem;
+        }
+
+        /* Theme Toggle */
         .theme-toggle {
-            width: 50px;
-            height: 26px;
+            width: 48px;
+            height: 25px;
             background: var(--bg-tertiary);
             border-radius: 13px;
             border: 1px solid var(--border-color);
             position: relative;
             cursor: pointer;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .theme-toggle::before {
@@ -107,18 +267,66 @@
             left: 3px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.3s ease;
         }
 
         [data-theme="dark"] .theme-toggle::before {
             content: '☾';
-            left: calc(100% - 23px);
+            left: calc(100% - 22px);
         }
 
-        /* Hero Section */
+        /* Floating Calc Button (visible on all pages, bottom right) */
+        .float-calc-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 58px;
+            height: 58px;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px var(--shadow-lg);
+            transition: all 0.3s ease;
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .float-calc-btn:hover {
+            transform: scale(1.12) translateY(-3px);
+            background: var(--accent-secondary);
+            box-shadow: 0 10px 28px var(--shadow-lg);
+        }
+
+        .float-calc-btn .tooltip-label {
+            position: absolute;
+            right: 68px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .float-calc-btn:hover .tooltip-label {
+            opacity: 1;
+        }
+
+        /* ===================== HERO ===================== */
         .hero {
-            margin-top: 80px;
+            margin-top: var(--nav-height);
             padding: 6rem 2rem 4rem;
             text-align: center;
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
@@ -129,11 +337,8 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
                 radial-gradient(circle at 20% 30%, var(--accent-light) 0%, transparent 30%),
                 radial-gradient(circle at 80% 70%, var(--accent-light) 0%, transparent 30%);
             opacity: 0.3;
@@ -165,25 +370,26 @@
             animation: fadeInUp 0.8s ease 0.2s both;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s both;
         }
 
-        /* Container */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===================== LAYOUT ===================== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* Sections */
         section {
             padding: 4rem 0;
             animation: fadeIn 0.6s ease;
@@ -203,7 +409,7 @@
             text-align: center;
         }
 
-        /* Cards */
+        /* ===================== CARDS ===================== */
         .card {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
@@ -214,10 +420,7 @@
             transition: all 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px var(--shadow-lg);
-        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow-lg); }
 
         .card h3 {
             font-family: 'Playfair Display', serif;
@@ -226,17 +429,10 @@
             margin-bottom: 1.2rem;
         }
 
-        .card p, .card li {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-size: 1.05rem;
-        }
+        .card p, .card li { color: var(--text-secondary); margin-bottom: 1rem; font-size: 1.05rem; }
+        .card ul, .card ol { margin-left: 1.5rem; }
 
-        .card ul, .card ol {
-            margin-left: 1.5rem;
-        }
-
-        /* Formula Display */
+        /* ===================== FORMULA ===================== */
         .formula {
             background: var(--bg-tertiary);
             border-left: 4px solid var(--accent-primary);
@@ -249,7 +445,7 @@
             overflow-x: auto;
         }
 
-        /* Collapsible Sections */
+        /* ===================== COLLAPSIBLE ===================== */
         .collapsible {
             cursor: pointer;
             display: flex;
@@ -258,27 +454,13 @@
             user-select: none;
         }
 
-        .collapsible::after {
-            content: '▼';
-            font-size: 0.8rem;
-            transition: transform 0.3s ease;
-        }
+        .collapsible::after { content: '▼'; font-size: 0.8rem; transition: transform 0.3s ease; }
+        .collapsible.active::after { transform: rotate(-180deg); }
 
-        .collapsible.active::after {
-            transform: rotate(-180deg);
-        }
+        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .collapsible-content.active { max-height: 3000px; }
 
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-
-        .collapsible-content.active {
-            max-height: 3000px;
-        }
-
-        /* Calculator Section */
+        /* ===================== CALCULATOR ===================== */
         .calculator {
             background: var(--bg-secondary);
             border: 2px solid var(--accent-secondary);
@@ -287,9 +469,7 @@
             box-shadow: 0 8px 40px var(--shadow-lg);
         }
 
-        .input-group {
-            margin-bottom: 1.8rem;
-        }
+        .input-group { margin-bottom: 1.8rem; }
 
         .input-group label {
             display: block;
@@ -319,26 +499,12 @@
             box-shadow: 0 0 0 3px var(--accent-light);
         }
 
-        .input-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
+        .input-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
 
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
+        .checkbox-group { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem; }
+        .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
 
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        /* Buttons */
+        /* ===================== BUTTONS ===================== */
         .btn {
             padding: 1rem 2.5rem;
             border: none;
@@ -350,57 +516,23 @@
             font-family: 'Crimson Pro', serif;
         }
 
-        .btn-primary {
-            background: var(--accent-primary);
-            color: white;
-            box-shadow: 0 4px 15px var(--shadow);
-        }
+        .btn-primary { background: var(--accent-primary); color: white; box-shadow: 0 4px 15px var(--shadow); }
+        .btn-primary:hover { background: var(--accent-secondary); transform: translateY(-2px); box-shadow: 0 6px 20px var(--shadow-lg); }
 
-        .btn-primary:hover {
-            background: var(--accent-secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--shadow-lg);
-        }
+        .btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--bg-primary); }
 
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
+        .btn-export { background: var(--success); color: white; }
+        .btn-export:hover { background: #3d6a1f; }
 
-        .btn-secondary:hover {
-            background: var(--bg-primary);
-        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .btn-export {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-export:hover {
-            background: #3d6a1f;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Results Section */
-        .results {
-            margin-top: 3rem;
-            animation: slideIn 0.5s ease;
-        }
+        /* ===================== RESULTS ===================== */
+        .results { margin-top: 3rem; animation: slideIn 0.5s ease; }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .iteration-display {
@@ -411,11 +543,7 @@
             margin-bottom: 2rem;
         }
 
-        .iteration-display h3 {
-            color: var(--accent-primary);
-            margin-bottom: 1.2rem;
-            font-family: 'Playfair Display', serif;
-        }
+        .iteration-display h3 { color: var(--accent-primary); margin-bottom: 1.2rem; font-family: 'Playfair Display', serif; }
 
         .calculation-step {
             background: var(--bg-primary);
@@ -427,11 +555,9 @@
             border-left: 3px solid var(--accent-secondary);
         }
 
-        .calculation-step strong {
-            color: var(--accent-primary);
-        }
+        .calculation-step strong { color: var(--accent-primary); }
 
-        /* Table */
+        /* ===================== TABLE ===================== */
         .table-container {
             overflow-x: auto;
             margin-top: 2rem;
@@ -439,11 +565,7 @@
             box-shadow: 0 4px 20px var(--shadow);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--bg-secondary);
-        }
+        table { width: 100%; border-collapse: collapse; background: var(--bg-secondary); }
 
         th, td {
             padding: 1rem;
@@ -453,35 +575,14 @@
             font-size: 0.9rem;
         }
 
-        th {
-            background: var(--accent-primary);
-            color: white;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-        }
+        th { background: var(--accent-primary); color: white; font-weight: 600; position: sticky; top: 0; }
+        tr:hover { background: var(--bg-tertiary); }
+        tr.converged { background: var(--accent-light); font-weight: 600; }
 
-        tr:hover {
-            background: var(--bg-tertiary);
-        }
+        /* ===================== PROGRESS ===================== */
+        .progress-container { margin: 2rem 0; }
 
-        tr.converged {
-            background: var(--accent-light);
-            font-weight: 600;
-        }
-
-        /* Progress Indicator */
-        .progress-container {
-            margin: 2rem 0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: var(--bg-tertiary);
-            border-radius: 4px;
-            overflow: hidden;
-        }
+        .progress-bar { width: 100%; height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden; }
 
         .progress-fill {
             height: 100%;
@@ -490,14 +591,9 @@
             border-radius: 4px;
         }
 
-        .progress-text {
-            text-align: center;
-            margin-top: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        .progress-text { text-align: center; margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem; }
 
-        /* Alert Messages */
+        /* ===================== ALERTS ===================== */
         .alert {
             padding: 1.2rem;
             border-radius: 8px;
@@ -507,136 +603,22 @@
         }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .alert-error {
-            background: rgba(139, 30, 30, 0.1);
-            border-color: var(--error);
-            color: var(--error);
-        }
+        .alert-error { background: rgba(139, 30, 30, 0.1); border-color: var(--error); color: var(--error); }
+        .alert-success { background: rgba(45, 80, 22, 0.1); border-color: var(--success); color: var(--success); }
+        .alert-warning { background: rgba(139, 105, 20, 0.1); border-color: var(--warning); color: var(--warning); }
 
-        .alert-success {
-            background: rgba(45, 80, 22, 0.1);
-            border-color: var(--success);
-            color: var(--success);
-        }
+        /* ===================== EXAMPLE BOX ===================== */
+        .example-box { background: var(--bg-tertiary); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .example-step { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+        .example-step:last-child { border-bottom: none; }
+        .example-step h4 { color: var(--accent-primary); margin-bottom: 0.8rem; font-size: 1.2rem; }
 
-        .alert-warning {
-            background: rgba(139, 105, 20, 0.1);
-            border-color: var(--warning);
-            color: var(--warning);
-        }
-
-        /* Example Box */
-        .example-box {
-            background: var(--bg-tertiary);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .example-step {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .example-step:last-child {
-            border-bottom: none;
-        }
-
-        .example-step h4 {
-            color: var(--accent-primary);
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        footer p {
-            color: var(--text-muted);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem;
-            }
-
-            .hero {
-                padding: 4rem 1rem 2rem;
-            }
-
-            .card, .calculator {
-                padding: 1.5rem;
-            }
-
-            .input-row {
-                grid-template-columns: 1fr;
-            }
-
-            .btn {
-                width: 100%;
-                margin-bottom: 0.8rem;
-            }
-
-            table {
-                font-size: 0.75rem;
-            }
-
-            th, td {
-                padding: 0.6rem;
-            }
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--accent-light);
-            border-top-color: var(--accent-primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Hide/Show utilities */
-        .hidden {
-            display: none !important;
-        }
-
-        .visible {
-            display: block;
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            cursor: help;
-            color: var(--accent-primary);
-            font-weight: 600;
-            border-bottom: 1px dotted var(--accent-primary);
-        }
+        /* ===================== TOOLTIP ===================== */
+        .tooltip { position: relative; display: inline-block; cursor: help; color: var(--accent-primary); font-weight: 600; border-bottom: 1px dotted var(--accent-primary); }
 
         .tooltip .tooltiptext {
             visibility: hidden;
@@ -670,18 +652,10 @@
             border-color: var(--bg-tertiary) transparent transparent transparent;
         }
 
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
+        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
 
-        /* Quick Presets */
-        .presets-container {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
+        /* ===================== PRESETS ===================== */
+        .presets-container { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 
         .preset-btn {
             padding: 0.6rem 1.2rem;
@@ -694,13 +668,9 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .preset-btn:hover {
-            background: var(--accent-light);
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-        }
+        .preset-btn:hover { background: var(--accent-light); border-color: var(--accent-primary); transform: translateY(-2px); }
 
-        /* Graph Container */
+        /* ===================== GRAPH ===================== */
         .graph-container {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
@@ -710,18 +680,9 @@
             box-shadow: 0 4px 20px var(--shadow);
         }
 
-        .graph-container h3 {
-            color: var(--accent-primary);
-            margin-bottom: 1.5rem;
-            font-family: 'Playfair Display', serif;
-        }
+        .graph-container h3 { color: var(--accent-primary); margin-bottom: 1.5rem; font-family: 'Playfair Display', serif; }
 
-        #functionGraph {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Copy Button */
+        /* ===================== COPY BUTTON ===================== */
         .copy-btn {
             padding: 0.4rem 0.8rem;
             background: var(--bg-primary);
@@ -733,166 +694,27 @@
             transition: all 0.2s ease;
         }
 
-        .copy-btn:hover {
-            background: var(--accent-light);
-            border-color: var(--accent-primary);
-        }
+        .copy-btn:hover { background: var(--accent-light); border-color: var(--accent-primary); }
 
-        /* Validation indicators */
-        .input-valid {
-            border-color: var(--success) !important;
-        }
+        /* ===================== VALIDATION ===================== */
+        .input-valid { border-color: var(--success) !important; }
+        .input-invalid { border-color: var(--error) !important; }
+        .validation-message { font-size: 0.85rem; margin-top: 0.4rem; display: block; }
+        .validation-success { color: var(--success); }
+        .validation-error { color: var(--error); }
 
-        .input-invalid {
-            border-color: var(--error) !important;
-        }
+        /* ===================== SCROLL INDICATOR ===================== */
+        .scroll-indicator { position: fixed; top: var(--nav-height); left: 0; width: 100%; height: 3px; background: var(--bg-tertiary); z-index: 999; }
+        .scroll-progress { height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); width: 0%; transition: width 0.1s ease; }
 
-        .validation-message {
-            font-size: 0.85rem;
-            margin-top: 0.4rem;
-            display: block;
-        }
+        /* ===================== STATS GRID ===================== */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 2rem 0; }
 
-        .validation-success {
-            color: var(--success);
-        }
+        .stat-card { background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
+        .stat-card .stat-value { font-size: 2rem; font-weight: 700; color: var(--accent-primary); font-family: 'JetBrains Mono', monospace; }
+        .stat-card .stat-label { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem; }
 
-        .validation-error {
-            color: var(--error);
-        }
-
-        /* Keyboard shortcuts hint */
-        .keyboard-hint {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 4px 15px var(--shadow-lg);
-            max-width: 250px;
-            z-index: 999;
-            animation: slideInRight 0.5s ease;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .keyboard-hint h4 {
-            font-size: 0.95rem;
-            margin-bottom: 0.8rem;
-            color: var(--accent-primary);
-        }
-
-        .keyboard-hint ul {
-            list-style: none;
-            font-size: 0.85rem;
-        }
-
-        .keyboard-hint li {
-            margin-bottom: 0.5rem;
-        }
-
-        .kbd {
-            background: var(--bg-tertiary);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .close-hint {
-            float: right;
-            cursor: pointer;
-            font-weight: bold;
-            color: var(--text-muted);
-        }
-
-        .close-hint:hover {
-            color: var(--text-primary);
-        }
-
-        /* Smooth scroll indicator */
-        .scroll-indicator {
-            position: fixed;
-            top: 80px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--bg-tertiary);
-            z-index: 999;
-        }
-
-        .scroll-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-
-        /* Help button */
-        .help-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            background: var(--accent-primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px var(--shadow-lg);
-            transition: all 0.3s ease;
-            z-index: 998;
-        }
-
-        .help-btn:hover {
-            transform: scale(1.1);
-            background: var(--accent-secondary);
-        }
-
-        /* Statistics Card */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: var(--bg-tertiary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .stat-card .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent-primary);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .stat-card .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-        }
-
-        /* Compare mode */
+        /* ===================== COMPARE MODE ===================== */
         .compare-mode {
             background: var(--accent-light);
             border: 2px dashed var(--accent-primary);
@@ -901,319 +723,423 @@
             margin-top: 2rem;
         }
 
-        /* Enhanced mobile experience */
-        @media (max-width: 768px) {
-            .keyboard-hint {
-                display: none;
-            }
-
-            .help-btn {
-                bottom: 80px;
-            }
-
-            .tooltip .tooltiptext {
-                width: 200px;
-                margin-left: -100px;
-            }
-
-            .presets-container {
-                gap: 0.5rem;
-            }
-
-            .preset-btn {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.8rem;
-            }
-
-            .stat-card .stat-value {
-                font-size: 1.5rem;
-            }
+        /* ===================== FEATURES SECTION ===================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        /* Print styles */
-        @media print {
-            header, footer, .theme-toggle, .btn, .help-btn, .keyboard-hint, .scroll-indicator {
-                display: none !important;
-            }
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 12px var(--shadow);
+        }
 
-            .card, .calculator {
-                box-shadow: none !important;
-                page-break-inside: avoid;
-            }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 28px var(--shadow-lg);
+            border-color: var(--accent-secondary);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ===================== COMPARISON TABLE ===================== */
+        .method-compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .method-compare-table th {
+            background: var(--accent-primary);
+            color: white;
+            padding: 0.9rem 1.2rem;
+            text-align: left;
+        }
+
+        .method-compare-table td {
+            padding: 0.9rem 1.2rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+        }
+
+        .method-compare-table tr:nth-child(even) {
+            background: var(--bg-tertiary);
+        }
+
+        .check { color: var(--success); font-weight: 700; }
+        .cross { color: var(--error); font-weight: 700; }
+
+        /* ===================== FOOTER ===================== */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p { color: var(--text-muted); }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 1rem; }
+            .hero { padding: 4rem 1rem 2rem; }
+            .card, .calculator { padding: 1.5rem; }
+            .input-row { grid-template-columns: 1fr; }
+            .btn { width: 100%; margin-bottom: 0.8rem; }
+            table { font-size: 0.75rem; }
+            th, td { padding: 0.6rem; }
+            .float-calc-btn { bottom: 20px; right: 20px; }
+        }
+
+        /* ===================== UTILITY ===================== */
+        .hidden { display: none !important; }
+
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media print {
+            header, footer, .float-calc-btn, .scroll-indicator { display: none !important; }
+            .card, .calculator { box-shadow: none !important; page-break-inside: avoid; }
         }
     </style>
 </head>
 <body data-theme="light">
-    <!-- Header -->
-    <header>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <header id="mainHeader">
         <nav>
-            <div class="logo">Regula Falsi</div>
-            <div class="theme-toggle" onclick="toggleTheme()"></div>
+            <a class="logo" onclick="scrollToTop()">Regula Falsi</a>
+
+            <!-- Desktop Nav Links -->
+            <ul class="nav-links" id="desktopNav">
+                <li><a href="#about" onclick="smoothScroll(event,'about')"><span class="nav-icon">📖</span> About</a></li>
+                <li><a href="#formula" onclick="smoothScroll(event,'formula')"><span class="nav-icon">📐</span> Formula</a></li>
+                <li><a href="#algorithm" onclick="smoothScroll(event,'algorithm')"><span class="nav-icon">🔢</span> Algorithm</a></li>
+                <li><a href="#examples" onclick="smoothScroll(event,'examples')"><span class="nav-icon">✏️</span> Examples</a></li>
+                <li><a href="#applications" onclick="smoothScroll(event,'applications')"><span class="nav-icon">🌍</span> Applications</a></li>
+                <li><a href="#features" onclick="smoothScroll(event,'features')"><span class="nav-icon">⭐</span> Features</a></li>
+                <li><a href="#calculator-section" class="nav-calc-btn" onclick="smoothScroll(event,'calculator-section')">
+                    <span>🧮</span> Calculator
+                </a></li>
+            </ul>
+
+            <!-- Right: theme + hamburger -->
+            <div class="nav-right">
+                <div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme"></div>
+                <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a onclick="mobileSmoothScroll('about')"><span>📖</span> About the Method</a>
+        <a onclick="mobileSmoothScroll('formula')"><span>📐</span> Formula</a>
+        <a onclick="mobileSmoothScroll('algorithm')"><span>🔢</span> Algorithm</a>
+        <a onclick="mobileSmoothScroll('examples')"><span>✏️</span> Examples</a>
+        <a onclick="mobileSmoothScroll('applications')"><span>🌍</span> Applications</a>
+        <a onclick="mobileSmoothScroll('features')"><span>⭐</span> Features</a>
+        <button class="mobile-calc-btn" onclick="mobileSmoothScroll('calculator-section')">🧮 Open Calculator</button>
+    </div>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="home">
         <div class="hero-content">
             <h1>Regula Falsi Method</h1>
             <p class="subtitle">An elegant iterative approach to finding roots of non-linear equations through linear interpolation</p>
+            <div class="hero-cta">
+                <button class="btn btn-primary" onclick="document.getElementById('calculator-section').scrollIntoView({behavior:'smooth'})">
+                    🧮 Open Calculator
+                </button>
+                <button class="btn btn-secondary" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+                    📖 Learn More
+                </button>
+            </div>
         </div>
     </section>
 
-    <!-- Main Content -->
+    <!-- ===================== MAIN CONTENT ===================== -->
     <main class="container">
-        <!-- Introduction -->
-        <section id="introduction">
+
+        <!-- About Section -->
+        <section id="about">
             <div class="card">
                 <h3 class="collapsible active">What is the Regula Falsi Method?</h3>
                 <div class="collapsible-content active">
                     <p>The <strong>Regula Falsi method</strong>, also known as the <strong>Method of False Position</strong>, is a numerical technique for finding approximate roots of real-valued continuous functions. It combines the reliability of the bisection method with faster convergence by using linear interpolation instead of simple bisection.</p>
-                    
                     <p>This method is particularly effective when you have an interval [a, b] where the function changes sign, guaranteeing the presence of at least one root within that interval. Unlike the bisection method which always divides the interval in half, Regula Falsi uses the function values to make a more informed choice about where the root might lie.</p>
-                    
                     <p><strong>Historical Context:</strong> The method has ancient origins, with early forms appearing in Indian mathematical texts and later refined by European mathematicians. The name "Regula Falsi" comes from Latin, meaning "rule of false position."</p>
                 </div>
             </div>
         </section>
 
-        <!-- Mathematical Formula -->
+        <!-- Formula Section -->
         <section id="formula">
             <h2 class="section-title">Mathematical Formula</h2>
             <div class="card">
                 <h3>The Regula Falsi Formula</h3>
                 <p>Given two points (a, f(a)) and (b, f(b)) where f(a) and f(b) have opposite signs, the next approximation x is calculated using:</p>
-                
-                <div class="formula">
-                    x = a - [f(a) × (b - a)] / [f(b) - f(a)]
-                </div>
-                
-                <p style="text-align: center; margin-top: 1rem;"><em>or equivalently</em></p>
-                
-                <div class="formula">
-                    x = [a × f(b) - b × f(a)] / [f(b) - f(a)]
-                </div>
-                
+                <div class="formula">x = a − [f(a) × (b − a)] / [f(b) − f(a)]</div>
+                <p style="text-align:center;margin-top:1rem;"><em>or equivalently</em></p>
+                <div class="formula">x = [a × f(b) − b × f(a)] / [f(b) − f(a)]</div>
                 <p>This formula represents the x-intercept of the straight line connecting the points (a, f(a)) and (b, f(b)). The method then updates the interval based on which side of x the root lies.</p>
+
+                <h3 style="margin-top:2rem;">Method Comparison</h3>
+                <div style="overflow-x:auto;">
+                    <table class="method-compare-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Regula Falsi</th>
+                                <th>Bisection</th>
+                                <th>Newton-Raphson</th>
+                                <th>Secant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Convergence</td><td>Linear (superlinear)</td><td>Linear</td><td>Quadratic</td><td>Superlinear (~1.618)</td></tr>
+                            <tr><td>Bracketing required</td><td><span class="check">✓ Yes</span></td><td><span class="check">✓ Yes</span></td><td><span class="cross">✗ No</span></td><td><span class="cross">✗ No</span></td></tr>
+                            <tr><td>Derivative needed</td><td><span class="check">✓ No</span></td><td><span class="check">✓ No</span></td><td><span class="cross">✗ Yes</span></td><td><span class="check">✓ No</span></td></tr>
+                            <tr><td>Guaranteed convergence</td><td><span class="check">✓ Yes</span></td><td><span class="check">✓ Yes</span></td><td><span class="cross">✗ Conditional</span></td><td><span class="cross">✗ Conditional</span></td></tr>
+                            <tr><td>Speed vs Bisection</td><td>Faster (usually)</td><td>Baseline</td><td>Much faster</td><td>Faster</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
-        <!-- Algorithm -->
+        <!-- Algorithm Section -->
         <section id="algorithm">
             <h2 class="section-title">Algorithm Steps</h2>
             <div class="card">
                 <h3>Step-by-Step Procedure</h3>
                 <ol>
-                    <li><strong>Initialize:</strong> Choose two initial points a and b such that f(a) × f(b) < 0 (opposite signs), ensuring a root exists in [a, b].</li>
-                    
+                    <li><strong>Initialize:</strong> Choose two initial points a and b such that f(a) × f(b) &lt; 0 (opposite signs), ensuring a root exists in [a, b].</li>
                     <li><strong>Calculate New Approximation:</strong> Compute x using the Regula Falsi formula:<br>
-                    <span style="font-family: 'JetBrains Mono', monospace; display: block; margin: 0.5rem 0;">x = a - [f(a) × (b - a)] / [f(b) - f(a)]</span></li>
-                    
+                    <span style="font-family:'JetBrains Mono',monospace;display:block;margin:0.5rem 0;">x = a − [f(a) × (b − a)] / [f(b) − f(a)]</span></li>
                     <li><strong>Evaluate Function:</strong> Calculate f(x) at the new approximation.</li>
-                    
-                    <li><strong>Check Convergence:</strong> If |f(x)| < ε (tolerance) or the error criterion is met, accept x as the root and stop.</li>
-                    
-                    <li><strong>Update Interval:</strong> 
+                    <li><strong>Check Convergence:</strong> If |f(x)| &lt; ε (tolerance) or the error criterion is met, accept x as the root and stop.</li>
+                    <li><strong>Update Interval:</strong>
                         <ul>
-                            <li>If f(a) × f(x) < 0, the root lies in [a, x], so set b = x</li>
-                            <li>If f(x) × f(b) < 0, the root lies in [x, b], so set a = x</li>
+                            <li>If f(a) × f(x) &lt; 0, the root lies in [a, x], so set b = x</li>
+                            <li>If f(x) × f(b) &lt; 0, the root lies in [x, b], so set a = x</li>
                         </ul>
                     </li>
-                    
                     <li><strong>Iterate:</strong> Return to step 2 and repeat until convergence or maximum iterations reached.</li>
                 </ol>
             </div>
-        </section>
 
-        <!-- Working Principle -->
-        <section id="principle">
-            <h2 class="section-title">Working Principle</h2>
+            <!-- Working Principle -->
             <div class="card">
-                <h3>How It Works</h3>
-                <p>The Regula Falsi method operates on a geometric principle:</p>
-                
+                <h3>Working Principle</h3>
                 <p><strong>Linear Interpolation:</strong> Instead of blindly bisecting the interval, the method draws a straight line (secant) between the two endpoints (a, f(a)) and (b, f(b)). The x-intercept of this line provides the next approximation.</p>
-                
                 <p><strong>Bracketing:</strong> Like the bisection method, Regula Falsi maintains a bracket around the root. At each iteration, one endpoint of the interval is replaced with the new approximation, always ensuring the root remains bracketed.</p>
-                
                 <p><strong>Convergence Behavior:</strong> The method typically converges faster than bisection because it uses function values to make intelligent guesses. However, in some cases, one endpoint may remain fixed while the other converges to the root (called "slow convergence").</p>
-                
                 <p><strong>Geometric Interpretation:</strong> Imagine connecting two points on a curve with a straight line. Where this line crosses the x-axis is likely closer to where the curve itself crosses the x-axis compared to simply taking the midpoint.</p>
             </div>
-        </section>
 
-        <!-- Advantages & Limitations -->
-        <section id="pros-cons">
-            <h2 class="section-title">Advantages & Limitations</h2>
+            <!-- Pros & Cons -->
             <div class="input-row">
-                <div class="card" style="background: rgba(45, 80, 22, 0.05);">
-                    <h3 style="color: var(--success);">✓ Advantages</h3>
+                <div class="card" style="background:rgba(45,80,22,0.05);">
+                    <h3 style="color:var(--success);">✓ Advantages</h3>
                     <ul>
-                        <li><strong>Guaranteed Convergence:</strong> Always converges to a root if the initial interval brackets it</li>
-                        <li><strong>No Derivative Required:</strong> Only function evaluations needed, no calculus</li>
+                        <li><strong>Guaranteed Convergence:</strong> Always converges if the initial interval brackets a root</li>
+                        <li><strong>No Derivative Required:</strong> Only function evaluations needed</li>
                         <li><strong>Faster than Bisection:</strong> Generally converges faster due to linear interpolation</li>
                         <li><strong>Simple Implementation:</strong> Straightforward algorithm, easy to code</li>
                         <li><strong>Robust:</strong> Handles many types of continuous functions reliably</li>
                         <li><strong>Visual Clarity:</strong> Geometric interpretation makes it intuitive</li>
                     </ul>
                 </div>
-                
-                <div class="card" style="background: rgba(139, 30, 30, 0.05);">
-                    <h3 style="color: var(--error);">✗ Limitations</h3>
+                <div class="card" style="background:rgba(139,30,30,0.05);">
+                    <h3 style="color:var(--error);">✗ Limitations</h3>
                     <ul>
-                        <li><strong>Slower than Newton's Method:</strong> Linear convergence vs quadratic</li>
+                        <li><strong>Slower than Newton's Method:</strong> Linear vs quadratic convergence</li>
                         <li><strong>One Endpoint May Stagnate:</strong> Can have slow convergence in some cases</li>
                         <li><strong>Requires Bracket:</strong> Must find initial interval where function changes sign</li>
                         <li><strong>Only One Root:</strong> Finds only one root in the given interval</li>
-                        <li><strong>Function Evaluation:</strong> May be slow for computationally expensive functions</li>
-                        <li><strong>Not Suitable for Multiple Roots:</strong> Struggles with roots of even multiplicity</li>
+                        <li><strong>Not for Multiple Roots:</strong> Struggles with roots of even multiplicity</li>
+                        <li><strong>Sensitive to Bracket Quality:</strong> Poor bracket can slow convergence</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Applications -->
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2 class="section-title">Manually Solved Example</h2>
+            <div class="card">
+                <h3>Example Problem</h3>
+                <p><strong>Find the root of f(x) = x³ − x − 1 in the interval [1, 2] using the Regula Falsi method (tolerance = 0.01)</strong></p>
+
+                <div class="example-box">
+                    <div class="example-step">
+                        <h4>Step 1: Verify Initial Conditions</h4>
+                        <p>Given: a = 1, b = 2</p>
+                        <p>f(a) = f(1) = 1³ − 1 − 1 = −1</p>
+                        <p>f(b) = f(2) = 2³ − 2 − 1 = 5</p>
+                        <p>Since f(1) × f(2) = −1 × 5 = −5 &lt; 0, a root exists in [1, 2] ✓</p>
+                    </div>
+                    <div class="example-step">
+                        <h4>Iteration 1</h4>
+                        <div class="formula">x₁ = 1 − [(−1) × (2 − 1)] / [5 − (−1)] = 1 + 1/6 ≈ 1.1667</div>
+                        <p>f(x₁) = f(1.1667) ≈ −0.5813 → Update: a = 1.1667, b = 2</p>
+                    </div>
+                    <div class="example-step">
+                        <h4>Iteration 2</h4>
+                        <div class="formula">x₂ = 1.1667 − [(−0.5813) × 0.8333] / [5.5813] ≈ 1.2535</div>
+                        <p>f(x₂) ≈ −0.2848 → Update: a = 1.2535, b = 2</p>
+                    </div>
+                    <div class="example-step">
+                        <h4>Iterations 3–5 (summary)</h4>
+                        <p>x₃ ≈ 1.2937, f(x₃) ≈ −0.1293</p>
+                        <p>x₄ ≈ 1.3115, f(x₄) ≈ −0.0568</p>
+                        <p>x₅ ≈ 1.3195, f(x₅) ≈ −0.0245</p>
+                    </div>
+                    <div class="example-step">
+                        <h4>Iteration 6</h4>
+                        <div class="formula">x₆ ≈ 1.3247, f(x₆) ≈ −0.0105</div>
+                        <p>|f(x₆)| ≈ 0.01 — convergence achieved!</p>
+                    </div>
+                    <div class="example-step" style="border:2px solid var(--success);background:rgba(45,80,22,0.05);border-radius:8px;padding:1rem;">
+                        <h4>✓ Solution</h4>
+                        <p><strong>Approximate root: x ≈ 1.3247 (6 iterations)</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Applications Section -->
         <section id="applications">
             <h2 class="section-title">Real-Life Applications</h2>
             <div class="card">
                 <h3>Where Regula Falsi is Used</h3>
                 <ul>
                     <li><strong>Engineering Design:</strong> Finding equilibrium points in mechanical systems, stress-strain analysis, and structural optimization</li>
-                    
-                    <li><strong>Financial Mathematics:</strong> Calculating internal rate of return (IRR), break-even analysis, and solving bond pricing equations</li>
-                    
+                    <li><strong>Financial Mathematics:</strong> Calculating internal rate of return (IRR), break-even analysis, and bond pricing equations</li>
                     <li><strong>Physics & Astronomy:</strong> Solving transcendental equations in orbital mechanics, wave propagation, and quantum mechanics</li>
-                    
-                    <li><strong>Chemical Engineering:</strong> Determining reaction equilibrium, solving mass balance equations, and process optimization</li>
-                    
-                    <li><strong>Electrical Engineering:</strong> Circuit analysis, finding operating points in non-linear circuits, and control system design</li>
-                    
+                    <li><strong>Chemical Engineering:</strong> Determining reaction equilibrium, mass balance equations, and process optimization</li>
+                    <li><strong>Electrical Engineering:</strong> Circuit analysis, non-linear operating points, and control system design</li>
                     <li><strong>Economics:</strong> Market equilibrium calculations, supply-demand intersection, and economic modeling</li>
-                    
                     <li><strong>Environmental Science:</strong> Pollution dispersion models, climate modeling, and resource management</li>
-                    
                     <li><strong>Computer Graphics:</strong> Ray-tracing algorithms, collision detection, and surface intersection calculations</li>
                 </ul>
             </div>
         </section>
 
-        <!-- Solved Example -->
-        <section id="example">
-            <h2 class="section-title">Manually Solved Example</h2>
-            <div class="card">
-                <h3>Example Problem</h3>
-                <p><strong>Find the root of f(x) = x³ - x - 1 in the interval [1, 2] using the Regula Falsi method (tolerance = 0.01)</strong></p>
-                
-                <div class="example-box">
-                    <div class="example-step">
-                        <h4>Step 1: Verify Initial Conditions</h4>
-                        <p>Given: a = 1, b = 2</p>
-                        <p>f(a) = f(1) = 1³ - 1 - 1 = -1</p>
-                        <p>f(b) = f(2) = 2³ - 2 - 1 = 5</p>
-                        <p>Since f(1) × f(2) = -1 × 5 = -5 < 0, a root exists in [1, 2] ✓</p>
-                    </div>
-                    
-                    <div class="example-step">
-                        <h4>Iteration 1</h4>
-                        <div class="formula">
-                            x₁ = a - [f(a) × (b - a)] / [f(b) - f(a)]
-                        </div>
-                        <div class="formula">
-                            x₁ = 1 - [(-1) × (2 - 1)] / [5 - (-1)]
-                        </div>
-                        <div class="formula">
-                            x₁ = 1 - [(-1) × 1] / 6 = 1 - (-1/6) = 1 + 0.1667 = 1.1667
-                        </div>
-                        <p>f(x₁) = f(1.1667) = (1.1667)³ - 1.1667 - 1 = 1.5854 - 1.1667 - 1 = -0.5813</p>
-                        <p>Since f(1) × f(x₁) = -1 × -0.5813 = 0.5813 > 0, root is in [x₁, 2]</p>
-                        <p>Update: a = 1.1667, b = 2</p>
-                    </div>
-                    
-                    <div class="example-step">
-                        <h4>Iteration 2</h4>
-                        <div class="formula">
-                            x₂ = 1.1667 - [(-0.5813) × (2 - 1.1667)] / [5 - (-0.5813)]
-                        </div>
-                        <div class="formula">
-                            x₂ = 1.1667 - [(-0.5813) × 0.8333] / 5.5813
-                        </div>
-                        <div class="formula">
-                            x₂ = 1.1667 + 0.4844 / 5.5813 = 1.1667 + 0.0868 = 1.2535
-                        </div>
-                        <p>f(x₂) = f(1.2535) = (1.2535)³ - 1.2535 - 1 = -0.2848</p>
-                        <p>Update: a = 1.2535, b = 2</p>
-                    </div>
-                    
-                    <div class="example-step">
-                        <h4>Iteration 3</h4>
-                        <div class="formula">
-                            x₃ = 1.2535 - [(-0.2848) × (2 - 1.2535)] / [5 - (-0.2848)]
-                        </div>
-                        <div class="formula">
-                            x₃ = 1.2535 + 0.2126 / 5.2848 = 1.2535 + 0.0402 = 1.2937
-                        </div>
-                        <p>f(x₃) = f(1.2937) = -0.1293</p>
-                        <p>Update: a = 1.2937, b = 2</p>
-                    </div>
-                    
-                    <div class="example-step">
-                        <h4>Iteration 4</h4>
-                        <div class="formula">
-                            x₄ = 1.2937 - [(-0.1293) × (2 - 1.2937)] / [5 - (-0.1293)]
-                        </div>
-                        <div class="formula">
-                            x₄ = 1.2937 + 0.0913 / 5.1293 = 1.2937 + 0.0178 = 1.3115
-                        </div>
-                        <p>f(x₄) = f(1.3115) = -0.0568</p>
-                        <p>Update: a = 1.3115, b = 2</p>
-                    </div>
-                    
-                    <div class="example-step">
-                        <h4>Iteration 5</h4>
-                        <div class="formula">
-                            x₅ = 1.3115 + 0.0401 / 5.0568 = 1.3195
-                        </div>
-                        <p>f(x₅) = f(1.3195) = -0.0245</p>
-                        <p>|f(x₅)| = 0.0245 < 0.01? No, continue...</p>
-                    </div>
-                    
-                    <div class="example-step">
-                        <h4>Iteration 6</h4>
-                        <div class="formula">
-                            x₆ = 1.3247
-                        </div>
-                        <p>f(x₆) = f(1.3247) = -0.0105</p>
-                        <p>|f(x₆)| = 0.0105 ≈ 0.01? Close enough!</p>
-                    </div>
-                    
-                    <div class="example-step" style="border: 2px solid var(--success); background: rgba(45, 80, 22, 0.05);">
-                        <h4>✓ Solution</h4>
-                        <p><strong>Approximate root: x ≈ 1.3247</strong></p>
-                        <p>The actual root is approximately 1.3247, which our method successfully found in 6 iterations!</p>
-                    </div>
+        <!-- Features Section -->
+        <section id="features">
+            <h2 class="section-title">Calculator Features</h2>
+            <p style="text-align:center;color:var(--text-secondary);margin-bottom:2rem;">Everything packed into this interactive solver</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧮</div>
+                    <h4>Step-by-Step Solver</h4>
+                    <p>Walk through each iteration one at a time with full formula breakdown and detailed calculations shown at every step.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h4>Function Graph</h4>
+                    <p>Visual plot of f(x) over your chosen interval, with the root clearly marked on the curve using Chart.js.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h4>Quick Presets</h4>
+                    <p>Six built-in example functions (polynomials, trig, exponential) so you can explore immediately without typing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h4>Bisection Comparison</h4>
+                    <p>Run both methods simultaneously and compare iteration counts, roots, and convergence speed side by side.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h4>PDF Export</h4>
+                    <p>Download a formatted PDF of the full iteration table, inputs, and final result — perfect for assignments and reports.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h4>Auto Bound Search</h4>
+                    <p>Don't know a starting interval? The solver can automatically scan and find an interval containing a root.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌙</div>
+                    <h4>Dark / Light Mode</h4>
+                    <p>Full theme support with smooth transitions. Toggle from the navbar or press <kbd style="background:var(--bg-tertiary);padding:2px 6px;border-radius:4px;font-size:0.85rem;">Ctrl+D</kbd>.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⌨️</div>
+                    <h4>Keyboard Shortcuts</h4>
+                    <p>Power-user controls: <kbd style="background:var(--bg-tertiary);padding:2px 6px;border-radius:4px;font-size:0.85rem;">Ctrl+Enter</kbd> to solve, <kbd style="background:var(--bg-tertiary);padding:2px 6px;border-radius:4px;font-size:0.85rem;">Ctrl+R</kbd> to reset.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✔️</div>
+                    <h4>Live Validation</h4>
+                    <p>Real-time feedback as you type — verifies function syntax and confirms that your interval brackets a root.</p>
                 </div>
             </div>
         </section>
 
         <!-- Interactive Calculator -->
-        <section id="calculator">
+        <section id="calculator-section">
             <h2 class="section-title">Interactive Solver</h2>
-            <div class="calculator">
-                <h3 style="margin-bottom: 2rem; color: var(--accent-primary); font-family: 'Playfair Display', serif;">Calculate Roots Using Regula Falsi Method</h3>
-                
+            <div class="calculator" id="calculatorBox">
+                <h3 style="margin-bottom:2rem;color:var(--accent-primary);font-family:'Playfair Display',serif;">Calculate Roots Using Regula Falsi Method</h3>
+
                 <!-- Quick Presets -->
-                <div style="margin-bottom: 2rem;">
-                    <label style="display: block; margin-bottom: 0.8rem; font-weight: 600;">
+                <div style="margin-bottom:2rem;">
+                    <label style="display:block;margin-bottom:0.8rem;font-weight:600;">
                         <span class="tooltip">Quick Examples
                             <span class="tooltiptext">Click any example to auto-fill the calculator with a pre-configured problem</span>
                         </span>
                     </label>
                     <div class="presets-container">
-                        <button class="preset-btn" onclick="loadPreset('x^3 - x - 1', 1, 2)">x³ - x - 1</button>
-                        <button class="preset-btn" onclick="loadPreset('x^2 - 4', 1, 3)">x² - 4</button>
-                        <button class="preset-btn" onclick="loadPreset('cos(x) - x', 0, 1)">cos(x) - x</button>
-                        <button class="preset-btn" onclick="loadPreset('e^x - 3*x', 0, 2)">eˣ - 3x</button>
-                        <button class="preset-btn" onclick="loadPreset('x*log(x) - 1', 2, 3)">x·log(x) - 1</button>
-                        <button class="preset-btn" onclick="loadPreset('sin(x) - 0.5', 0, 1)">sin(x) - 0.5</button>
+                        <button class="preset-btn" onclick="loadPreset('x^3 - x - 1', 1, 2)">x³ − x − 1</button>
+                        <button class="preset-btn" onclick="loadPreset('x^2 - 4', 1, 3)">x² − 4</button>
+                        <button class="preset-btn" onclick="loadPreset('cos(x) - x', 0, 1)">cos(x) − x</button>
+                        <button class="preset-btn" onclick="loadPreset('e^x - 3*x', 0, 2)">eˣ − 3x</button>
+                        <button class="preset-btn" onclick="loadPreset('x*log(x) - 1', 2, 3)">x·log(x) − 1</button>
+                        <button class="preset-btn" onclick="loadPreset('sin(x) - 0.5', 0, 1)">sin(x) − 0.5</button>
                     </div>
                 </div>
 
@@ -1221,18 +1147,15 @@
                     <label for="function">
                         <span class="tooltip">Enter Function f(x)
                             <span class="tooltiptext">
-                                <strong>Supported operators:</strong><br>
-                                +, -, *, /, ^ (power)<br><br>
-                                <strong>Functions:</strong><br>
-                                sqrt(), sin(), cos(), tan(), log(), ln(), exp(), abs(), asin(), acos(), atan()<br><br>
-                                <strong>Constants:</strong><br>
-                                e, pi
+                                <strong>Operators:</strong> +, -, *, /, ^ (power)<br><br>
+                                <strong>Functions:</strong> sqrt(), sin(), cos(), tan(), log(), ln(), exp(), abs(), asin(), acos(), atan()<br><br>
+                                <strong>Constants:</strong> e, pi
                             </span>
                         </span>:
                     </label>
-                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <div style="display:flex;gap:0.5rem;align-items:center;">
                         <input type="text" id="function" placeholder="e.g., x^3 - x - 1" value="x^3 - x - 1" oninput="validateFunction()">
-                        <button class="copy-btn" onclick="copyToClipboard('function')" title="Copy function">📋</button>
+                        <button class="copy-btn" onclick="copyToClipboard('function')" title="Copy">📋</button>
                     </div>
                     <span id="functionValidation" class="validation-message"></span>
                 </div>
@@ -1241,7 +1164,7 @@
                     <input type="checkbox" id="useBounds" checked>
                     <label for="useBounds">
                         <span class="tooltip">Specify interval [a, b]
-                            <span class="tooltiptext">Providing an interval where f(a) and f(b) have opposite signs guarantees finding a root. If unchecked, the system will try to find an interval automatically.</span>
+                            <span class="tooltiptext">Providing an interval where f(a) and f(b) have opposite signs guarantees finding a root.</span>
                         </span>
                     </label>
                 </div>
@@ -1263,9 +1186,8 @@
                         <label for="errorType">
                             <span class="tooltip">Error Calculation Type
                                 <span class="tooltiptext">
-                                    <strong>Absolute Error:</strong> |xₙ - xₙ₋₁|<br><br>
-                                    <strong>Relative Error:</strong> |xₙ - xₙ₋₁| / |xₙ| × 100%<br><br>
-                                    Relative error is better for comparing convergence across different scales.
+                                    <strong>Absolute:</strong> |xₙ − xₙ₋₁|<br><br>
+                                    <strong>Relative:</strong> |xₙ − xₙ₋₁| / |xₙ| × 100%
                                 </span>
                             </span>:
                         </label>
@@ -1277,7 +1199,7 @@
                     <div class="input-group">
                         <label for="tolerance">
                             <span class="tooltip">Tolerance (ε)
-                                <span class="tooltiptext">The method stops when error falls below this value. Smaller tolerance = more accurate result but more iterations.</span>
+                                <span class="tooltiptext">The method stops when error falls below this value.</span>
                             </span>:
                         </label>
                         <input type="number" id="tolerance" step="any" value="0.0001" min="0.000001">
@@ -1288,7 +1210,7 @@
                     <div class="input-group">
                         <label for="precision">
                             <span class="tooltip">Decimal Precision
-                                <span class="tooltiptext">Number of digits displayed after the decimal point in results (1-15)</span>
+                                <span class="tooltiptext">Digits displayed after decimal point (1–15)</span>
                             </span>:
                         </label>
                         <input type="number" id="precision" min="1" max="15" value="6">
@@ -1296,7 +1218,7 @@
                     <div class="input-group">
                         <label for="maxIterations">
                             <span class="tooltip">Maximum Iterations
-                                <span class="tooltiptext">Safety limit to prevent infinite loops. Increase if the method doesn't converge.</span>
+                                <span class="tooltiptext">Safety limit to prevent infinite loops.</span>
                             </span>:
                         </label>
                         <input type="number" id="maxIterations" min="1" max="1000" value="100">
@@ -1307,14 +1229,14 @@
                     <input type="checkbox" id="showGraph" checked>
                     <label for="showGraph">
                         <span class="tooltip">Show Function Graph
-                            <span class="tooltiptext">Visualize the function and see where roots are located graphically</span>
+                            <span class="tooltiptext">Visualize the function over the interval</span>
                         </span>
                     </label>
                 </div>
 
-                <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="solveRegulaFalsi()" title="Press Ctrl+Enter">
-                        🚀 Solve & Show First Iteration
+                <div style="display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;">
+                    <button class="btn btn-primary" onclick="solveRegulaFalsi()" title="Ctrl+Enter">
+                        🚀 Solve &amp; Show First Iteration
                     </button>
                     <button class="btn btn-secondary" onclick="resetCalculator()">
                         🔄 Reset
@@ -1333,125 +1255,124 @@
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 Regula Falsi Method Calculator | A Comprehensive Academic Tool for Numerical Methods</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Designed for students, educators, and engineers</p>
+        <p style="margin-top:0.5rem;font-size:0.9rem;">Designed for students, educators, and engineers</p>
     </footer>
 
-    <!-- Scroll Progress Indicator -->
-    <div class="scroll-indicator">
-        <div class="scroll-progress" id="scrollProgress"></div>
-    </div>
+    <!-- Floating Calculator Button -->
+    <button class="float-calc-btn" onclick="scrollToCalculator()" title="Go to Calculator">
+        🧮
+        <span class="tooltip-label">Open Calculator</span>
+    </button>
 
-    <!-- Help Button -->
-    <button class="help-btn" onclick="toggleKeyboardHints()" title="Keyboard Shortcuts">?</button>
-
-    <!-- Keyboard Shortcuts Hint -->
-    <div class="keyboard-hint hidden" id="keyboardHints">
-        <span class="close-hint" onclick="toggleKeyboardHints()">×</span>
-        <h4>⌨️ Keyboard Shortcuts</h4>
-        <ul>
-            <li><span class="kbd">Ctrl+Enter</span> - Solve</li>
-            <li><span class="kbd">Ctrl+R</span> - Reset</li>
-            <li><span class="kbd">Ctrl+D</span> - Toggle Dark Mode</li>
-            <li><span class="kbd">Esc</span> - Close Hints</li>
-        </ul>
-    </div>
-
+    <!-- ===================== SCRIPTS ===================== -->
     <script>
-        // Theme Toggle
+        // ── Theme ──────────────────────────────────────────────────────────────
         function toggleTheme() {
             const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            const newTheme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
             body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         }
 
-        // Load saved theme
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.body.setAttribute('data-theme', savedTheme);
-            
-            // Setup collapsible sections
-            document.querySelectorAll('.collapsible').forEach(elem => {
-                elem.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    const content = this.nextElementSibling;
-                    content.classList.toggle('active');
-                });
-            });
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            // Bounds checkbox toggle
-            document.getElementById('useBounds').addEventListener('change', function() {
-                document.getElementById('boundsInputs').style.display = this.checked ? 'grid' : 'none';
-            });
+        function scrollToCalculator() {
+            document.getElementById('calculator-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
-            // Scroll progress indicator
-            window.addEventListener('scroll', updateScrollProgress);
+        // ── Smooth scroll helpers ──────────────────────────────────────────────
+        function smoothScroll(e, id) {
+            e.preventDefault();
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // close mobile menu if open
+            closeMobileMenu();
+        }
 
-            // Show welcome hint
-            setTimeout(() => {
-                if (!localStorage.getItem('hintsShown')) {
-                    toggleKeyboardHints();
-                    localStorage.setItem('hintsShown', 'true');
-                }
-            }, 2000);
+        function mobileSmoothScroll(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            closeMobileMenu();
+        }
+
+        // ── Mobile menu ────────────────────────────────────────────────────────
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const ham = document.getElementById('hamburger');
+            menu.classList.toggle('open');
+            ham.classList.toggle('open');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.getElementById('hamburger').classList.remove('open');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', e => {
+            const menu = document.getElementById('mobileMenu');
+            const ham = document.getElementById('hamburger');
+            if (!menu.contains(e.target) && !ham.contains(e.target) && menu.classList.contains('open')) {
+                closeMobileMenu();
+            }
         });
 
-        // Scroll progress
+        // ── Active nav link on scroll ──────────────────────────────────────────
+        function updateActiveNavLink() {
+            const sections = ['about','formula','algorithm','examples','applications','features','calculator-section'];
+            const scrollY = window.scrollY + 100;
+            let current = '';
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop <= scrollY) current = id;
+            });
+
+            document.querySelectorAll('.nav-links li a').forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href && href === '#' + current) link.classList.add('active');
+            });
+        }
+
+        // ── Scroll progress + header shadow ───────────────────────────────────
         function updateScrollProgress() {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const winScroll = document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             document.getElementById('scrollProgress').style.width = scrolled + '%';
+            document.getElementById('mainHeader').classList.toggle('scrolled', winScroll > 20);
+            updateActiveNavLink();
         }
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            // Ctrl+Enter to solve
-            if (e.ctrlKey && e.key === 'Enter') {
-                e.preventDefault();
-                solveRegulaFalsi();
-            }
-            // Ctrl+R to reset
-            if (e.ctrlKey && e.key === 'r') {
-                e.preventDefault();
-                resetCalculator();
-            }
-            // Ctrl+D to toggle theme
-            if (e.ctrlKey && e.key === 'd') {
-                e.preventDefault();
-                toggleTheme();
-            }
-            // Esc to close hints
-            if (e.key === 'Escape') {
-                const hints = document.getElementById('keyboardHints');
-                if (!hints.classList.contains('hidden')) {
-                    toggleKeyboardHints();
-                }
-            }
+        window.addEventListener('scroll', updateScrollProgress);
+
+        // ── Keyboard shortcuts ─────────────────────────────────────────────────
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); solveRegulaFalsi(); }
+            if (e.ctrlKey && e.key === 'r')     { e.preventDefault(); resetCalculator(); }
+            if (e.ctrlKey && e.key === 'd')     { e.preventDefault(); toggleTheme(); }
         });
 
-        // Toggle keyboard hints
-        function toggleKeyboardHints() {
-            const hints = document.getElementById('keyboardHints');
-            hints.classList.toggle('hidden');
-        }
+        // ── Init ───────────────────────────────────────────────────────────────
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
 
-        // Copy to clipboard
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            navigator.clipboard.writeText(element.value).then(() => {
-                // Visual feedback
-                const btn = event.target;
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '✓';
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                }, 1000);
+            // Collapsibles
+            document.querySelectorAll('.collapsible').forEach(elem => {
+                elem.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    this.nextElementSibling.classList.toggle('active');
+                });
             });
-        }
 
-        // Load preset
+            // Bounds checkbox
+            document.getElementById('useBounds').addEventListener('change', function() {
+                document.getElementById('boundsInputs').style.display = this.checked ? 'grid' : 'none';
+            });
+        });
+
+        // ── Preset loader ──────────────────────────────────────────────────────
         function loadPreset(func, a, b) {
             document.getElementById('function').value = func;
             document.getElementById('lowerBound').value = a;
@@ -1460,348 +1381,144 @@
             document.getElementById('boundsInputs').style.display = 'grid';
             validateFunction();
             validateBounds();
-            
-            // Smooth scroll to calculator
-            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('calculator-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Real-time function validation
+        // ── Validation ─────────────────────────────────────────────────────────
         function validateFunction() {
             const funcStr = document.getElementById('function').value.trim();
             const input = document.getElementById('function');
             const message = document.getElementById('functionValidation');
-            
-            if (!funcStr) {
-                input.classList.remove('input-valid', 'input-invalid');
-                message.textContent = '';
-                return;
-            }
-
+            if (!funcStr) { input.classList.remove('input-valid','input-invalid'); message.textContent = ''; return; }
             try {
-                const f = (x) => {
-                    const scope = { x: x };
-                    return math.evaluate(funcStr, scope);
-                };
-                f(0); // Test evaluation
-                
-                input.classList.remove('input-invalid');
-                input.classList.add('input-valid');
-                message.className = 'validation-message validation-success';
-                message.textContent = '✓ Valid function';
+                const f = x => math.evaluate(funcStr, { x });
+                f(0);
+                input.classList.remove('input-invalid'); input.classList.add('input-valid');
+                message.className = 'validation-message validation-success'; message.textContent = '✓ Valid function';
             } catch (e) {
-                input.classList.remove('input-valid');
-                input.classList.add('input-invalid');
-                message.className = 'validation-message validation-error';
-                message.textContent = '✗ Invalid syntax';
+                input.classList.remove('input-valid'); input.classList.add('input-invalid');
+                message.className = 'validation-message validation-error'; message.textContent = '✗ Invalid syntax';
             }
         }
 
-        // Real-time bounds validation
         function validateBounds() {
             const a = parseFloat(document.getElementById('lowerBound').value);
             const b = parseFloat(document.getElementById('upperBound').value);
             const message = document.getElementById('boundsValidation');
-            
-            if (isNaN(a) || isNaN(b)) {
-                message.className = 'validation-message validation-error';
-                message.textContent = '✗ Please enter valid numbers';
-                return;
-            }
-            
-            if (a >= b) {
-                message.className = 'validation-message validation-error';
-                message.textContent = '✗ Lower bound must be less than upper bound';
-                return;
-            }
-            
-            // Check if signs are opposite
+            if (isNaN(a) || isNaN(b)) { message.className='validation-message validation-error'; message.textContent='✗ Enter valid numbers'; return; }
+            if (a >= b) { message.className='validation-message validation-error'; message.textContent='✗ Lower bound must be less than upper bound'; return; }
             const funcStr = document.getElementById('function').value.trim();
             if (funcStr) {
                 try {
-                    const f = (x) => {
-                        const scope = { x: x };
-                        return math.evaluate(funcStr, scope);
-                    };
-                    const fa = f(a);
-                    const fb = f(b);
-                    
-                    if (fa * fb < 0) {
-                        message.className = 'validation-message validation-success';
-                        message.textContent = '✓ Root exists in this interval (opposite signs)';
-                    } else if (fa * fb > 0) {
-                        message.className = 'validation-message validation-error';
-                        message.textContent = '✗ f(a) and f(b) have same sign - no guaranteed root';
-                    }
-                } catch (e) {
-                    message.textContent = '';
-                }
+                    const f = x => math.evaluate(funcStr, { x });
+                    const fa = f(a), fb = f(b);
+                    if (fa * fb < 0) { message.className='validation-message validation-success'; message.textContent='✓ Root exists in this interval (opposite signs)'; }
+                    else if (fa * fb > 0) { message.className='validation-message validation-error'; message.textContent='✗ f(a) and f(b) have same sign — no guaranteed root'; }
+                } catch(e) { message.textContent=''; }
             }
         }
 
-        // Plot function graph
-        function plotFunctionGraph(funcStr, a, b, root, precision) {
-            const resultsDiv = document.getElementById('resultsSection');
-            const showGraph = document.getElementById('showGraph').checked;
-            
-            if (!showGraph) return '';
+        // ── Copy ───────────────────────────────────────────────────────────────
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            navigator.clipboard.writeText(element.value).then(() => {
+                const btn = event.target;
+                const orig = btn.innerHTML;
+                btn.innerHTML = '✓';
+                setTimeout(() => btn.innerHTML = orig, 1000);
+            });
+        }
 
-            // Create canvas
+        // ── Graph ──────────────────────────────────────────────────────────────
+        function plotFunctionGraph(funcStr, a, b, root, precision) {
+            if (!document.getElementById('showGraph').checked) return '';
             const canvasId = 'functionGraph';
             const graphHTML = `
                 <div class="graph-container">
                     <h3>📈 Function Visualization</h3>
                     <canvas id="${canvasId}"></canvas>
-                </div>
-            `;
-            
-            // Add to page first
+                </div>`;
             setTimeout(() => {
                 const canvas = document.getElementById(canvasId);
                 if (!canvas) return;
-                
                 try {
-                    const f = (x) => {
-                        const scope = { x: x };
-                        return math.evaluate(funcStr, scope);
-                    };
-                    
-                    // Generate data points
-                    const range = b - a;
-                    const start = a - range * 0.5;
-                    const end = b + range * 0.5;
-                    const step = (end - start) / 200;
-                    
-                    const xValues = [];
-                    const yValues = [];
-                    
+                    const f = x => math.evaluate(funcStr, { x });
+                    const range = b - a, start = a - range * 0.5, end = b + range * 0.5, step = (end - start) / 200;
+                    const xValues = [], yValues = [];
                     for (let x = start; x <= end; x += step) {
-                        try {
-                            const y = f(x);
-                            if (isFinite(y)) {
-                                xValues.push(x);
-                                yValues.push(y);
-                            }
-                        } catch (e) {
-                            // Skip invalid points
-                        }
+                        try { const y = f(x); if (isFinite(y)) { xValues.push(x); yValues.push(y); } } catch(e) {}
                     }
-                    
-                    // Create chart
+                    const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
                     new Chart(canvas, {
                         type: 'line',
                         data: {
                             labels: xValues.map(x => x.toFixed(2)),
-                            datasets: [{
-                                label: 'f(x)',
-                                data: yValues,
-                                borderColor: getComputedStyle(document.documentElement)
-                                    .getPropertyValue('--accent-primary').trim(),
-                                backgroundColor: 'transparent',
-                                borderWidth: 2,
-                                pointRadius: 0,
-                                tension: 0.4
-                            }, {
-                                label: 'x-axis',
-                                data: Array(xValues.length).fill(0),
-                                borderColor: getComputedStyle(document.documentElement)
-                                    .getPropertyValue('--text-muted').trim(),
-                                borderWidth: 1,
-                                borderDash: [5, 5],
-                                pointRadius: 0
-                            }, {
-                                label: 'Root',
-                                data: xValues.map(x => {
-                                    return Math.abs(x - root) < step * 2 ? f(x) : null;
-                                }),
-                                borderColor: getComputedStyle(document.documentElement)
-                                    .getPropertyValue('--success').trim(),
-                                backgroundColor: getComputedStyle(document.documentElement)
-                                    .getPropertyValue('--success').trim(),
-                                pointRadius: 8,
-                                showLine: false
-                            }]
+                            datasets: [
+                                { label: 'f(x)', data: yValues, borderColor: css('--accent-primary'), backgroundColor: 'transparent', borderWidth: 2, pointRadius: 0, tension: 0.4 },
+                                { label: 'x-axis', data: Array(xValues.length).fill(0), borderColor: css('--text-muted'), borderWidth: 1, borderDash: [5,5], pointRadius: 0 },
+                                { label: 'Root', data: xValues.map(x => Math.abs(x-root)<step*2 ? f(x) : null), borderColor: css('--success'), backgroundColor: css('--success'), pointRadius: 8, showLine: false }
+                            ]
                         },
                         options: {
-                            responsive: true,
-                            maintainAspectRatio: true,
-                            aspectRatio: 2,
-                            plugins: {
-                                legend: {
-                                    display: true,
-                                    labels: {
-                                        color: getComputedStyle(document.documentElement)
-                                            .getPropertyValue('--text-primary').trim()
-                                    }
-                                },
-                                tooltip: {
-                                    mode: 'index',
-                                    intersect: false
-                                }
-                            },
+                            responsive: true, maintainAspectRatio: true, aspectRatio: 2,
+                            plugins: { legend: { display: true, labels: { color: css('--text-primary') } }, tooltip: { mode: 'index', intersect: false } },
                             scales: {
-                                x: {
-                                    display: true,
-                                    title: {
-                                        display: true,
-                                        text: 'x',
-                                        color: getComputedStyle(document.documentElement)
-                                            .getPropertyValue('--text-primary').trim()
-                                    },
-                                    ticks: {
-                                        maxTicksLimit: 10,
-                                        color: getComputedStyle(document.documentElement)
-                                            .getPropertyValue('--text-secondary').trim()
-                                    },
-                                    grid: {
-                                        color: getComputedStyle(document.documentElement)
-                                            .getPropertyValue('--border-color').trim()
-                                    }
-                                },
-                                y: {
-                                    display: true,
-                                    title: {
-                                        display: true,
-                                        text: 'f(x)',
-                                        color: getComputedStyle(document.documentElement)
-                                            .getPropertyValue('--text-primary').trim()
-                                    },
-                                    ticks: {
-                                        color: getComputedStyle(document.documentElement)
-                                            .getPropertyValue('--text-secondary').trim()
-                                    },
-                                    grid: {
-                                        color: getComputedStyle(document.documentElement)
-                                            .getPropertyValue('--border-color').trim()
-                                    }
-                                }
+                                x: { display: true, title: { display: true, text: 'x', color: css('--text-primary') }, ticks: { maxTicksLimit: 10, color: css('--text-secondary') }, grid: { color: css('--border-color') } },
+                                y: { display: true, title: { display: true, text: 'f(x)', color: css('--text-primary') }, ticks: { color: css('--text-secondary') }, grid: { color: css('--border-color') } }
                             }
                         }
                     });
-                } catch (e) {
-                    console.error('Graph error:', e);
-                }
+                } catch(e) { console.error('Graph error:', e); }
             }, 100);
-            
             return graphHTML;
         }
 
-        // Statistics display
+        // ── Stats ──────────────────────────────────────────────────────────────
         function generateStatistics(iterations, precision) {
-            const lastIter = iterations[iterations.length - 1];
-            const avgError = iterations.slice(1).reduce((sum, iter) => sum + iter.error, 0) / (iterations.length - 1);
-            const maxError = Math.max(...iterations.slice(1).map(iter => iter.error));
-            
-            return `
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">${iterations.length}</div>
-                        <div class="stat-label">Total Iterations</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${lastIter.x.toFixed(precision)}</div>
-                        <div class="stat-label">Final Root</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${Math.abs(lastIter.fx).toFixed(precision)}</div>
-                        <div class="stat-label">|f(root)|</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">${avgError.toFixed(precision)}</div>
-                        <div class="stat-label">Avg Error</div>
-                    </div>
-                </div>
-            `;
+            const last = iterations[iterations.length - 1];
+            const avg = iterations.slice(1).reduce((s,i)=>s+i.error,0)/(iterations.length-1||1);
+            return `<div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">${iterations.length}</div><div class="stat-label">Total Iterations</div></div>
+                <div class="stat-card"><div class="stat-value">${last.x.toFixed(precision)}</div><div class="stat-label">Final Root</div></div>
+                <div class="stat-card"><div class="stat-value">${Math.abs(last.fx).toFixed(precision)}</div><div class="stat-label">|f(root)|</div></div>
+                <div class="stat-card"><div class="stat-value">${avg.toFixed(precision)}</div><div class="stat-label">Avg Error</div></div>
+            </div>`;
         }
 
-        // Compare mode toggle
-        let compareMode = false;
-        let bisectionIterations = [];
+        // ── Compare ────────────────────────────────────────────────────────────
+        let compareMode = false, bisectionIterations = [];
 
         function toggleCompareMode() {
             compareMode = !compareMode;
             const btn = document.getElementById('compareBtn');
-            if (compareMode) {
-                btn.style.background = 'var(--accent-primary)';
-                btn.style.color = 'white';
-            } else {
-                btn.style.background = '';
-                btn.style.color = '';
-            }
+            btn.style.background = compareMode ? 'var(--accent-primary)' : '';
+            btn.style.color = compareMode ? 'white' : '';
         }
 
-        // Bisection method (for comparison)
         function solveBisection(funcStr, a, b, tolerance, maxIter, precision, errorType) {
             const iterations = [];
-            
-            const f = (x) => {
-                const scope = { x: x };
-                return math.evaluate(funcStr, scope);
-            };
-            
-            let iter = 0;
-            let converged = false;
-            
+            const f = x => math.evaluate(funcStr, { x });
+            let iter = 0, converged = false;
             while (iter < maxIter && !converged) {
                 iter++;
-                
-                const mid = (a + b) / 2;
-                const fmid = f(mid);
-                const fa = f(a);
-                const fb = f(b);
-                
+                const mid = (a+b)/2, fmid = f(mid), fa = f(a), fb = f(b);
                 let error = 0;
-                if (iter > 1) {
-                    const prevX = iterations[iter - 2].x;
-                    if (errorType === 'absolute') {
-                        error = Math.abs(mid - prevX);
-                    } else {
-                        error = Math.abs((mid - prevX) / mid) * 100;
-                    }
-                }
-                
-                iterations.push({
-                    iteration: iter,
-                    a: a,
-                    b: b,
-                    x: mid,
-                    fx: fmid,
-                    error: error
-                });
-                
-                if (Math.abs(fmid) < tolerance || (iter > 1 && error < tolerance)) {
-                    converged = true;
-                } else {
-                    if (fa * fmid < 0) {
-                        b = mid;
-                    } else {
-                        a = mid;
-                    }
-                }
+                if (iter > 1) { const prev = iterations[iter-2].x; error = errorType==='absolute' ? Math.abs(mid-prev) : Math.abs((mid-prev)/mid)*100; }
+                iterations.push({ iteration: iter, a, b, x: mid, fx: fmid, error });
+                if (Math.abs(fmid)<tolerance||(iter>1&&error<tolerance)) { converged=true; } else { if(fa*fmid<0) b=mid; else a=mid; }
             }
-            
             return iterations;
         }
 
-        // Global variables for iteration control
-        let iterations = [];
-        let currentIterationIndex = 0;
-        let finalRoot = null;
+        // ── Solver ─────────────────────────────────────────────────────────────
+        let iterations = [], currentIterationIndex = 0, finalRoot = null;
 
-        // Main solving function
         function solveRegulaFalsi() {
-            // Reset
-            iterations = [];
-            bisectionIterations = [];
-            currentIterationIndex = 0;
-            finalRoot = null;
-            
+            iterations = []; bisectionIterations = []; currentIterationIndex = 0; finalRoot = null;
             const errorDiv = document.getElementById('errorMessage');
             const resultsDiv = document.getElementById('resultsSection');
-            errorDiv.innerHTML = '';
-            resultsDiv.innerHTML = '';
-            resultsDiv.classList.add('hidden');
+            errorDiv.innerHTML = ''; resultsDiv.innerHTML = ''; resultsDiv.classList.add('hidden');
 
-            // Get inputs
             const funcStr = document.getElementById('function').value.trim();
             const useBounds = document.getElementById('useBounds').checked;
             const tolerance = parseFloat(document.getElementById('tolerance').value);
@@ -1809,149 +1526,54 @@
             const precision = parseInt(document.getElementById('precision').value);
             const errorType = document.getElementById('errorType').value;
 
-            // Validate inputs
-            if (!funcStr) {
-                showError('Please enter a function');
-                return;
-            }
-
-            if (tolerance <= 0) {
-                showError('Tolerance must be positive');
-                return;
-            }
-
-            if (maxIter < 1) {
-                showError('Maximum iterations must be at least 1');
-                return;
-            }
+            if (!funcStr) { showError('Please enter a function'); return; }
+            if (tolerance <= 0) { showError('Tolerance must be positive'); return; }
+            if (maxIter < 1) { showError('Maximum iterations must be at least 1'); return; }
 
             let a, b;
-            
             if (useBounds) {
                 a = parseFloat(document.getElementById('lowerBound').value);
                 b = parseFloat(document.getElementById('upperBound').value);
-                
-                if (isNaN(a) || isNaN(b)) {
-                    showError('Please enter valid numerical bounds');
-                    return;
-                }
-                
-                if (a >= b) {
-                    showError('Lower bound must be less than upper bound');
-                    return;
-                }
+                if (isNaN(a)||isNaN(b)) { showError('Please enter valid numerical bounds'); return; }
+                if (a >= b) { showError('Lower bound must be less than upper bound'); return; }
             } else {
-                // Try to find initial bounds automatically
-                const searchResult = findInitialBounds(funcStr);
-                if (!searchResult.success) {
-                    showError('Could not find an interval containing a root automatically. Please specify bounds manually.');
-                    return;
-                }
-                a = searchResult.a;
-                b = searchResult.b;
+                const sr = findInitialBounds(funcStr);
+                if (!sr.success) { showError('Could not find an interval automatically. Please specify bounds.'); return; }
+                a = sr.a; b = sr.b;
             }
 
-            // Parse and validate function
             let f;
-            try {
-                f = (x) => {
-                    const scope = { x: x };
-                    return math.evaluate(funcStr, scope);
-                };
-                // Test function
-                f(a);
-                f(b);
-            } catch (e) {
-                showError('Invalid function. Error: ' + e.message);
-                return;
-            }
+            try { f = x => math.evaluate(funcStr, { x }); f(a); f(b); }
+            catch(e) { showError('Invalid function: ' + e.message); return; }
 
-            // Check if root exists in interval
-            const fa = f(a);
-            const fb = f(b);
-            
-            if (fa * fb > 0) {
-                showError(`f(${a}) and f(${b}) have the same sign. No root guaranteed in this interval. Please choose a different interval where the function changes sign.`);
-                return;
-            }
+            const fa = f(a), fb = f(b);
+            if (fa * fb > 0) { showError(`f(${a}) and f(${b}) have the same sign. No root guaranteed. Choose a different interval.`); return; }
+            if (Math.abs(fa) < tolerance) { showSuccess(`Lower bound ${a} is already a root!`); displayFinalResult(a, fa, 0); return; }
+            if (Math.abs(fb) < tolerance) { showSuccess(`Upper bound ${b} is already a root!`); displayFinalResult(b, fb, 0); return; }
 
-            if (Math.abs(fa) < tolerance) {
-                showSuccess(`The lower bound ${a} is already a root!`);
-                displayFinalResult(a, fa, 0);
-                return;
-            }
-
-            if (Math.abs(fb) < tolerance) {
-                showSuccess(`The upper bound ${b} is already a root!`);
-                displayFinalResult(b, fb, 0);
-                return;
-            }
-
-            // Perform iterations
-            let iter = 0;
-            let converged = false;
-            let a_curr = a;
-            let b_curr = b;
-            
+            let iter = 0, converged = false, a_curr = a, b_curr = b;
             while (iter < maxIter && !converged) {
                 iter++;
-                
-                const fa_curr = f(a_curr);
-                const fb_curr = f(b_curr);
-                
-                // Calculate new approximation
-                const x = a_curr - (fa_curr * (b_curr - a_curr)) / (fb_curr - fa_curr);
+                const fa_curr = f(a_curr), fb_curr = f(b_curr);
+                const x = a_curr - (fa_curr*(b_curr-a_curr))/(fb_curr-fa_curr);
                 const fx = f(x);
-                
-                // Calculate error
                 let error = 0;
-                if (iter > 1) {
-                    const prevX = iterations[iter - 2].x;
-                    if (errorType === 'absolute') {
-                        error = Math.abs(x - prevX);
-                    } else {
-                        error = Math.abs((x - prevX) / x) * 100;
-                    }
-                }
-                
-                // Store iteration data
-                iterations.push({
-                    iteration: iter,
-                    a: a_curr,
-                    b: b_curr,
-                    fa: fa_curr,
-                    fb: fb_curr,
-                    x: x,
-                    fx: fx,
-                    error: error
-                });
-                
-                // Check convergence
-                if (Math.abs(fx) < tolerance || (iter > 1 && error < tolerance)) {
-                    converged = true;
-                    finalRoot = x;
-                } else {
-                    // Update interval
-                    if (fa_curr * fx < 0) {
-                        b_curr = x;
-                    } else {
-                        a_curr = x;
-                    }
-                }
+                if (iter > 1) { const prev = iterations[iter-2].x; error = errorType==='absolute' ? Math.abs(x-prev) : Math.abs((x-prev)/x)*100; }
+                iterations.push({ iteration: iter, a: a_curr, b: b_curr, fa: fa_curr, fb: fb_curr, x, fx, error });
+                if (Math.abs(fx)<tolerance||(iter>1&&error<tolerance)) { converged=true; finalRoot=x; }
+                else { if (fa_curr*fx<0) b_curr=x; else a_curr=x; }
             }
 
-            if (!converged) {
-                showWarning(`Method did not converge within ${maxIter} iterations. Try increasing max iterations or adjusting tolerance.`);
-            }
+            if (!converged) showWarning(`Method did not converge within ${maxIter} iterations.`);
+            if (compareMode) bisectionIterations = solveBisection(funcStr, a, b, tolerance, maxIter, precision, errorType);
 
-            // Compare with bisection if enabled
-            if (compareMode) {
-                bisectionIterations = solveBisection(funcStr, a, b, tolerance, maxIter, precision, errorType);
-            }
-
-            // Display first iteration
             displayIteration(0, precision, funcStr, a, b);
             resultsDiv.classList.remove('hidden');
+
+            // Scroll to results table after solving
+            setTimeout(() => {
+                resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 200);
         }
 
         function displayIteration(index, precision, funcStr, origA, origB) {
@@ -1959,332 +1581,169 @@
             const iter = iterations[index];
             const errorType = document.getElementById('errorType').value;
             const errorUnit = errorType === 'relative' ? '%' : '';
-            
+
             let html = '<div class="results">';
-            
-            // Progress indicator
-            const progress = ((index + 1) / iterations.length) * 100;
-            html += `
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progress}%"></div>
-                    </div>
-                    <div class="progress-text">Iteration ${index + 1} of ${iterations.length}</div>
-                </div>
-            `;
-            
-            // Statistics
-            if (index === iterations.length - 1) {
-                html += generateStatistics(iterations, precision);
-            }
-            
-            // Iteration display
-            html += `
-                <div class="iteration-display">
-                    <h3>Iteration ${iter.iteration} - Detailed Calculation</h3>
-                    
-                    <div class="calculation-step">
-                        <strong>Given Interval:</strong> [${iter.a.toFixed(precision)}, ${iter.b.toFixed(precision)}]
-                    </div>
-                    
-                    <div class="calculation-step">
-                        <strong>Function Values:</strong><br>
-                        f(a) = f(${iter.a.toFixed(precision)}) = ${iter.fa.toFixed(precision)}<br>
-                        f(b) = f(${iter.b.toFixed(precision)}) = ${iter.fb.toFixed(precision)}
-                    </div>
-                    
-                    <div class="calculation-step">
-                        <strong>Apply Regula Falsi Formula:</strong><br>
-                        x = a - [f(a) × (b - a)] / [f(b) - f(a)]<br>
-                        x = ${iter.a.toFixed(precision)} - [${iter.fa.toFixed(precision)} × (${iter.b.toFixed(precision)} - ${iter.a.toFixed(precision)})] / [${iter.fb.toFixed(precision)} - ${iter.fa.toFixed(precision)}]<br>
-                        x = ${iter.x.toFixed(precision)}
-                    </div>
-                    
-                    <div class="calculation-step">
-                        <strong>New Function Value:</strong><br>
-                        f(x) = f(${iter.x.toFixed(precision)}) = ${iter.fx.toFixed(precision)}
-                    </div>
-            `;
-            
+            const progress = ((index+1)/iterations.length)*100;
+            html += `<div class="progress-container"><div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><div class="progress-text">Iteration ${index+1} of ${iterations.length}</div></div>`;
+            if (index === iterations.length-1) html += generateStatistics(iterations, precision);
+
+            html += `<div class="iteration-display">
+                <h3>Iteration ${iter.iteration} — Detailed Calculation</h3>
+                <div class="calculation-step"><strong>Given Interval:</strong> [${iter.a.toFixed(precision)}, ${iter.b.toFixed(precision)}]</div>
+                <div class="calculation-step"><strong>Function Values:</strong><br>f(a) = f(${iter.a.toFixed(precision)}) = ${iter.fa.toFixed(precision)}<br>f(b) = f(${iter.b.toFixed(precision)}) = ${iter.fb.toFixed(precision)}</div>
+                <div class="calculation-step"><strong>Apply Regula Falsi Formula:</strong><br>
+                    x = a − [f(a) × (b − a)] / [f(b) − f(a)]<br>
+                    x = ${iter.a.toFixed(precision)} − [${iter.fa.toFixed(precision)} × (${iter.b.toFixed(precision)} − ${iter.a.toFixed(precision)})] / [${iter.fb.toFixed(precision)} − ${iter.fa.toFixed(precision)}]<br>
+                    x = ${iter.x.toFixed(precision)}</div>
+                <div class="calculation-step"><strong>New Function Value:</strong><br>f(x) = f(${iter.x.toFixed(precision)}) = ${iter.fx.toFixed(precision)}</div>`;
+
             if (iter.iteration > 1) {
-                html += `
-                    <div class="calculation-step">
-                        <strong>${errorType === 'absolute' ? 'Absolute' : 'Relative'} Error:</strong><br>
-                        Error = ${iter.error.toFixed(precision)}${errorUnit}
-                    </div>
-                `;
+                html += `<div class="calculation-step"><strong>${errorType==='absolute'?'Absolute':'Relative'} Error:</strong><br>Error = ${iter.error.toFixed(precision)}${errorUnit}</div>`;
             }
-            
-            html += `
-                    <div class="calculation-step" style="background: var(--accent-light); border-left-color: var(--accent-primary); font-weight: 600;">
-                        <strong>Next Interval:</strong><br>
-                        ${iter.fa * iter.fx < 0 ? 
-                            `f(a) × f(x) < 0, so root is in [${iter.a.toFixed(precision)}, ${iter.x.toFixed(precision)}]` : 
-                            `f(x) × f(b) < 0, so root is in [${iter.x.toFixed(precision)}, ${iter.b.toFixed(precision)}]`
-                        }
-                    </div>
-                </div>
-            `;
-            
-            // Buttons
-            if (index < iterations.length - 1) {
-                html += `
-                    <div style="text-align: center; margin: 2rem 0;">
-                        <button class="btn btn-primary" onclick="nextIteration(${index + 1}, ${precision}, '${funcStr}', ${origA}, ${origB})">
-                            Next Iteration →
-                        </button>
-                        <button class="btn btn-secondary" onclick="skipToEnd(${precision}, '${funcStr}', ${origA}, ${origB})" style="margin-left: 1rem;">
-                            Skip to Final Result
-                        </button>
-                    </div>
-                `;
+
+            html += `<div class="calculation-step" style="background:var(--accent-light);border-left-color:var(--accent-primary);font-weight:600;">
+                <strong>Next Interval:</strong><br>
+                ${iter.fa*iter.fx<0 ? `f(a)×f(x) &lt; 0 → root in [${iter.a.toFixed(precision)}, ${iter.x.toFixed(precision)}]` : `f(x)×f(b) &lt; 0 → root in [${iter.x.toFixed(precision)}, ${iter.b.toFixed(precision)}]`}
+                </div></div>`;
+
+            if (index < iterations.length-1) {
+                html += `<div style="text-align:center;margin:2rem 0;">
+                    <button class="btn btn-primary" onclick="nextIteration(${index+1},${precision},'${funcStr.replace(/'/g,"\\'")}',${origA},${origB})">Next Iteration →</button>
+                    <button class="btn btn-secondary" onclick="skipToEnd(${precision},'${funcStr.replace(/'/g,"\\'")}',${origA},${origB})" style="margin-left:1rem;">Skip to Final Result</button>
+                </div>`;
             } else {
-                html += `
-                    <div class="alert alert-success">
-                        <strong>✓ Converged!</strong> The method has found the root.
-                    </div>
-                `;
+                html += `<div class="alert alert-success"><strong>✓ Converged!</strong> The method has found the root.</div>`;
             }
-            
-            // Graph
-            html += plotFunctionGraph(funcStr, origA, origB, iterations[iterations.length - 1].x, precision);
-            
-            // Always show the complete iteration table
+
+            html += plotFunctionGraph(funcStr, origA, origB, iterations[iterations.length-1].x, precision);
+
+            // Iteration table — always anchor id="iterationTable"
             html += generateIterationTable(precision);
-            
-            // Comparison table
-            if (compareMode && bisectionIterations.length > 0 && index === iterations.length - 1) {
+
+            if (compareMode && bisectionIterations.length > 0 && index === iterations.length-1) {
                 html += generateComparisonTable(precision);
             }
-            
-            // Export button
-            html += `
-                <div style="text-align: center; margin-top: 2rem;">
-                    <button class="btn btn-export" onclick="exportToPDF(${precision})">
-                        📄 Export Table as PDF
-                    </button>
-                </div>
-            `;
-            
-            html += '</div>';
-            
+
+            html += `<div style="text-align:center;margin-top:2rem;">
+                <button class="btn btn-export" onclick="exportToPDF(${precision})">📄 Export Table as PDF</button>
+            </div></div>`;
+
             resultsDiv.innerHTML = html;
         }
 
         function nextIteration(index, precision, funcStr, origA, origB) {
             currentIterationIndex = index;
             displayIteration(index, precision, funcStr, origA, origB);
-            // Smooth scroll to results
             document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function skipToEnd(precision, funcStr, origA, origB) {
-            currentIterationIndex = iterations.length - 1;
-            displayIteration(iterations.length - 1, precision, funcStr, origA, origB);
+            currentIterationIndex = iterations.length-1;
+            displayIteration(iterations.length-1, precision, funcStr, origA, origB);
             document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function generateIterationTable(precision) {
             const errorType = document.getElementById('errorType').value;
             const errorUnit = errorType === 'relative' ? ' (%)' : '';
-            
-            let html = `
-                <div class="table-container" style="margin-top: 3rem;">
-                    <h3 style="margin-bottom: 1rem; color: var(--accent-primary);">Complete Iteration Table</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Iteration</th>
-                                <th>a</th>
-                                <th>b</th>
-                                <th>f(a)</th>
-                                <th>f(b)</th>
-                                <th>x</th>
-                                <th>f(x)</th>
-                                <th>Error${errorUnit}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
+            let html = `<div class="table-container" id="iterationTable" style="margin-top:3rem;">
+                <h3 style="margin-bottom:1rem;color:var(--accent-primary);padding:1rem 1rem 0;">Complete Iteration Table</h3>
+                <table><thead><tr>
+                    <th>Iteration</th><th>a</th><th>b</th><th>f(a)</th><th>f(b)</th><th>x</th><th>f(x)</th><th>Error${errorUnit}</th>
+                </tr></thead><tbody>`;
             iterations.forEach((iter, idx) => {
-                const isLast = idx === iterations.length - 1;
-                const rowClass = isLast ? 'converged' : '';
-                html += `
-                    <tr class="${rowClass}">
-                        <td>${iter.iteration}</td>
-                        <td>${iter.a.toFixed(precision)}</td>
-                        <td>${iter.b.toFixed(precision)}</td>
-                        <td>${iter.fa.toFixed(precision)}</td>
-                        <td>${iter.fb.toFixed(precision)}</td>
-                        <td>${iter.x.toFixed(precision)}</td>
-                        <td>${iter.fx.toFixed(precision)}</td>
-                        <td>${iter.iteration === 1 ? '-' : iter.error.toFixed(precision)}</td>
-                    </tr>
-                `;
+                const rowClass = idx === iterations.length-1 ? 'converged' : '';
+                html += `<tr class="${rowClass}">
+                    <td>${iter.iteration}</td>
+                    <td>${iter.a.toFixed(precision)}</td>
+                    <td>${iter.b.toFixed(precision)}</td>
+                    <td>${iter.fa.toFixed(precision)}</td>
+                    <td>${iter.fb.toFixed(precision)}</td>
+                    <td>${iter.x.toFixed(precision)}</td>
+                    <td>${iter.fx.toFixed(precision)}</td>
+                    <td>${iter.iteration===1?'−':iter.error.toFixed(precision)}</td>
+                </tr>`;
             });
-            
-            html += `
-                        </tbody>
-                    </table>
-                </div>
-            `;
-            
+            html += `</tbody></table></div>`;
             if (finalRoot !== null) {
-                html += `
-                    <div class="alert alert-success" style="margin-top: 2rem;">
-                        <strong>✓ Final Root:</strong> x ≈ ${iterations[iterations.length - 1].x.toFixed(precision)}<br>
-                        <strong>Function Value:</strong> f(x) ≈ ${iterations[iterations.length - 1].fx.toFixed(precision)}<br>
-                        <strong>Total Iterations:</strong> ${iterations.length}
-                    </div>
-                `;
+                html += `<div class="alert alert-success" style="margin-top:2rem;">
+                    <strong>✓ Final Root:</strong> x ≈ ${iterations[iterations.length-1].x.toFixed(precision)}<br>
+                    <strong>Function Value:</strong> f(x) ≈ ${iterations[iterations.length-1].fx.toFixed(precision)}<br>
+                    <strong>Total Iterations:</strong> ${iterations.length}
+                </div>`;
             }
-            
             return html;
         }
 
         function generateComparisonTable(precision) {
-            let html = `
-                <div class="compare-mode">
-                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem;">📊 Comparison: Regula Falsi vs Bisection Method</h3>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value">${iterations.length}</div>
-                            <div class="stat-label">Regula Falsi Iterations</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">${bisectionIterations.length}</div>
-                            <div class="stat-label">Bisection Iterations</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">${iterations[iterations.length - 1].x.toFixed(precision)}</div>
-                            <div class="stat-label">Regula Falsi Root</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">${bisectionIterations[bisectionIterations.length - 1].x.toFixed(precision)}</div>
-                            <div class="stat-label">Bisection Root</div>
-                        </div>
-                    </div>
-                    
-                    <p style="margin-top: 1rem; text-align: center;">
-                        <strong>Winner:</strong> ${iterations.length < bisectionIterations.length ? 
-                            'Regula Falsi (fewer iterations) 🏆' : 
-                            iterations.length > bisectionIterations.length ?
-                            'Bisection (fewer iterations) 🏆' :
-                            'Tie (same iterations) 🤝'}
-                    </p>
+            const rf = iterations[iterations.length-1], bi = bisectionIterations[bisectionIterations.length-1];
+            return `<div class="compare-mode">
+                <h3 style="color:var(--accent-primary);margin-bottom:1rem;">📊 Comparison: Regula Falsi vs Bisection</h3>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value">${iterations.length}</div><div class="stat-label">Regula Falsi Iterations</div></div>
+                    <div class="stat-card"><div class="stat-value">${bisectionIterations.length}</div><div class="stat-label">Bisection Iterations</div></div>
+                    <div class="stat-card"><div class="stat-value">${rf.x.toFixed(precision)}</div><div class="stat-label">Regula Falsi Root</div></div>
+                    <div class="stat-card"><div class="stat-value">${bi.x.toFixed(precision)}</div><div class="stat-label">Bisection Root</div></div>
                 </div>
-            `;
-            
-            return html;
+                <p style="margin-top:1rem;text-align:center;">
+                    <strong>Winner:</strong> ${iterations.length < bisectionIterations.length ? 'Regula Falsi 🏆' : iterations.length > bisectionIterations.length ? 'Bisection 🏆' : 'Tie 🤝'}
+                </p>
+            </div>`;
         }
 
         function exportToPDF(precision) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            
-            // Title
-            doc.setFontSize(18);
-            doc.setFont(undefined, 'bold');
-            doc.text('Regula Falsi Method - Iteration Results', 14, 20);
-            
-            // Function info
-            doc.setFontSize(11);
-            doc.setFont(undefined, 'normal');
+            doc.setFontSize(18); doc.setFont(undefined,'bold');
+            doc.text('Regula Falsi Method — Iteration Results', 14, 20);
+            doc.setFontSize(11); doc.setFont(undefined,'normal');
             doc.text(`Function: f(x) = ${document.getElementById('function').value}`, 14, 30);
             doc.text(`Tolerance: ${document.getElementById('tolerance').value}`, 14, 37);
             doc.text(`Error Type: ${document.getElementById('errorType').value}`, 14, 44);
             doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 51);
-            
-            // Table
             const errorType = document.getElementById('errorType').value;
             const errorUnit = errorType === 'relative' ? ' (%)' : '';
-            
             const tableData = iterations.map(iter => [
-                iter.iteration,
-                iter.a.toFixed(precision),
-                iter.b.toFixed(precision),
-                iter.fa.toFixed(precision),
-                iter.fb.toFixed(precision),
-                iter.x.toFixed(precision),
-                iter.fx.toFixed(precision),
-                iter.iteration === 1 ? '-' : iter.error.toFixed(precision)
+                iter.iteration, iter.a.toFixed(precision), iter.b.toFixed(precision),
+                iter.fa.toFixed(precision), iter.fb.toFixed(precision), iter.x.toFixed(precision),
+                iter.fx.toFixed(precision), iter.iteration===1?'−':iter.error.toFixed(precision)
             ]);
-            
             doc.autoTable({
                 startY: 60,
-                head: [['Iter', 'a', 'b', 'f(a)', 'f(b)', 'x', 'f(x)', `Error${errorUnit}`]],
+                head: [['Iter','a','b','f(a)','f(b)','x','f(x)',`Error${errorUnit}`]],
                 body: tableData,
                 theme: 'grid',
-                headStyles: { fillColor: [139, 69, 19] },
+                headStyles: { fillColor: [139,69,19] },
                 styles: { fontSize: 9 }
             });
-            
-            // Final result
             const finalY = doc.lastAutoTable.finalY + 10;
-            doc.setFont(undefined, 'bold');
-            doc.text(`Final Root: x ≈ ${iterations[iterations.length - 1].x.toFixed(precision)}`, 14, finalY);
-            doc.setFont(undefined, 'normal');
-            doc.text(`f(x) ≈ ${iterations[iterations.length - 1].fx.toFixed(precision)}`, 14, finalY + 7);
-            doc.text(`Total Iterations: ${iterations.length}`, 14, finalY + 14);
-            
-            // Save
+            doc.setFont(undefined,'bold');
+            doc.text(`Final Root: x ≈ ${iterations[iterations.length-1].x.toFixed(precision)}`, 14, finalY);
+            doc.setFont(undefined,'normal');
+            doc.text(`f(x) ≈ ${iterations[iterations.length-1].fx.toFixed(precision)}`, 14, finalY+7);
+            doc.text(`Total Iterations: ${iterations.length}`, 14, finalY+14);
             doc.save('regula-falsi-results.pdf');
         }
 
         function findInitialBounds(funcStr) {
             try {
-                const f = (x) => {
-                    const scope = { x: x };
-                    return math.evaluate(funcStr, scope);
-                };
-                
-                // Search in range [-100, 100]
+                const f = x => math.evaluate(funcStr, { x });
                 for (let start = -100; start < 100; start += 0.5) {
                     const end = start + 0.5;
-                    const fStart = f(start);
-                    const fEnd = f(end);
-                    
-                    if (fStart * fEnd < 0) {
-                        return { success: true, a: start, b: end };
-                    }
+                    try { if (f(start)*f(end) < 0) return { success: true, a: start, b: end }; } catch(e) {}
                 }
-                
                 return { success: false };
-            } catch (e) {
-                return { success: false };
-            }
+            } catch(e) { return { success: false }; }
         }
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.innerHTML = `<div class="alert alert-error">${message}</div>`;
-        }
-
-        function showWarning(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.innerHTML = `<div class="alert alert-warning">${message}</div>`;
-        }
-
-        function showSuccess(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.innerHTML = `<div class="alert alert-success">${message}</div>`;
-        }
+        function showError(msg) { document.getElementById('errorMessage').innerHTML = `<div class="alert alert-error">${msg}</div>`; }
+        function showWarning(msg) { document.getElementById('errorMessage').innerHTML = `<div class="alert alert-warning">${msg}</div>`; }
+        function showSuccess(msg) { document.getElementById('errorMessage').innerHTML = `<div class="alert alert-success">${msg}</div>`; }
 
         function displayFinalResult(root, froot, iters) {
             const precision = parseInt(document.getElementById('precision').value);
             const resultsDiv = document.getElementById('resultsSection');
-            resultsDiv.innerHTML = `
-                <div class="results">
-                    <div class="alert alert-success">
-                        <strong>✓ Root Found!</strong><br>
-                        x = ${root.toFixed(precision)}<br>
-                        f(x) = ${froot.toFixed(precision)}<br>
-                        Iterations: ${iters}
-                    </div>
-                </div>
-            `;
+            resultsDiv.innerHTML = `<div class="results"><div class="alert alert-success"><strong>✓ Root Found!</strong><br>x = ${root.toFixed(precision)}<br>f(x) = ${froot.toFixed(precision)}<br>Iterations: ${iters}</div></div>`;
             resultsDiv.classList.remove('hidden');
         }
 
@@ -2303,11 +1762,8 @@
             document.getElementById('resultsSection').classList.add('hidden');
             document.getElementById('functionValidation').textContent = '';
             document.getElementById('boundsValidation').textContent = '';
-            document.getElementById('function').classList.remove('input-valid', 'input-invalid');
-            iterations = [];
-            bisectionIterations = [];
-            currentIterationIndex = 0;
-            finalRoot = null;
+            document.getElementById('function').classList.remove('input-valid','input-invalid');
+            iterations = []; bisectionIterations = []; currentIterationIndex = 0; finalRoot = null;
             compareMode = false;
             document.getElementById('compareBtn').style.background = '';
             document.getElementById('compareBtn').style.color = '';
